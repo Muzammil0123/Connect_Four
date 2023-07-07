@@ -1,5 +1,6 @@
 container=document.querySelector(".container");
 result=document.querySelector(".result")
+score=document.querySelector(".score");
 function creatediv(){
     let div=document.createElement('div');
     div.classList.add('child');
@@ -7,6 +8,12 @@ function creatediv(){
     
     return div;
 }
+let player1=player1.value;
+let player2=player2.value;
+if(localStorage.getItem(player1)==undefined)
+localStorage.setItem(player1,"0");
+if(localStorage.getItem(player2)==undefined)
+localStorage.setItem(player2,"0");
 let arr=[];
 var matrix=[];
 let count=0;
@@ -168,9 +175,19 @@ function exitgame(x=-1,y=-1){
     
    if(matrix[x][y].dataset.color=="red"){
     result.textContent="Player One wins";
+    var fh=localStorage.getItem(player1);
+    a=JSON.parse(a);
+    a=Number.parseInt(a);
+    a+=1;
+    localStorage.setItem(player1,JSON.stringify(a));
    }
    else if(matrix[x][y].dataset.color=="blue") {
-    result.textContent="Player Two wins"
+    result.textContent="Player Two wins";
+    var bh=localStorage.getItem(player1);
+    a=JSON.parse(a);
+    a=Number.parseInt(a);
+    a+=1;
+    localStorage.setItem(player1,JSON.stringify(a));
    }
    else if(x==-1 && y==-1){
     result.textContent="Draw";
@@ -178,4 +195,7 @@ function exitgame(x=-1,y=-1){
    arr.forEach((ele)=>{
     ele.removeEventListener("click",handler);
    })
+   score.innerHTML=`${player1} score is ${fh} "\n"
+                    ${player2} score is ${bh} 
+                    `
 }
