@@ -8,12 +8,7 @@ function creatediv(){
     
     return div;
 }
-let player1=player1.value;
-let player2=player2.value;
-if(localStorage.getItem(player1)==undefined)
-localStorage.setItem(player1,"0");
-if(localStorage.getItem(player2)==undefined)
-localStorage.setItem(player2,"0");
+
 let arr=[];
 var matrix=[];
 let count=0;
@@ -170,24 +165,31 @@ function checkforwin(x,y){
         }
     }
 }
-
+let player1=fplayer1.value;
+let player2=splayer2.value;
+if(localStorage.getItem(player1)==undefined)
+localStorage.setItem(player1,JSON.stringify(0));
+if(localStorage.getItem(player2)==undefined)
+localStorage.setItem(player2,JSON.stringify(0));
+   let fh=localStorage.getItem(player1);
+    fh=JSON.parse(fh);
+    fh=Number.parseInt(fh);
+    let bh=localStorage.getItem(player2);
+    bh=JSON.parse(bh);
+    bh=Number.parseInt(bh);
 function exitgame(x=-1,y=-1){
     
    if(matrix[x][y].dataset.color=="red"){
     result.textContent="Player One wins";
-    var fh=localStorage.getItem(player1);
-    a=JSON.parse(a);
-    a=Number.parseInt(a);
-    a+=1;
-    localStorage.setItem(player1,JSON.stringify(a));
+   
+    fh+=1;
+    localStorage.setItem(player1,JSON.stringify(fh));
    }
    else if(matrix[x][y].dataset.color=="blue") {
     result.textContent="Player Two wins";
-    var bh=localStorage.getItem(player1);
-    a=JSON.parse(a);
-    a=Number.parseInt(a);
-    a+=1;
-    localStorage.setItem(player1,JSON.stringify(a));
+  
+    bh+=1;
+    localStorage.setItem(player2,JSON.stringify(bh));
    }
    else if(x==-1 && y==-1){
     result.textContent="Draw";
@@ -195,7 +197,7 @@ function exitgame(x=-1,y=-1){
    arr.forEach((ele)=>{
     ele.removeEventListener("click",handler);
    })
-   score.innerHTML=`${player1} score is ${fh} "\n"
-                    ${player2} score is ${bh} 
+   score.innerHTML=`${player1} score is ${fh-1} <br>
+                    ${player2} score is ${bh+1} 
                     `
 }
